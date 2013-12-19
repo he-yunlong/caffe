@@ -135,8 +135,10 @@ void WindowDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   //    class_index overlap x1 y1 x2 y2
 
   LOG(INFO) << "Window data layer:" << std::endl
-      << "  true positive overlap threshold: " 
-      << this->layer_param_.det_tp_threshold() << std::endl
+      << "  foreground (object) overlap threshold: " 
+      << this->layer_param_.det_fg_threshold() << std::endl
+      << "  background (non-object) overlap threshold: " 
+      << this->layer_param_.det_bg_threshold() << std::endl
       << "  foreground sampling fraction: "
       << this->layer_param_.det_fg_fraction();
 
@@ -175,9 +177,9 @@ void WindowDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       window[WindowDataLayer::Y2] = y2;
       
       // add window to foreground list or background list
-      if (overlap >= this->layer_param_.det_tp_threshold()) {
+      if (overlap >= this->layer_param_.det_fg_threshold()) {
         fg_windows_.push_back(window);
-      } else {
+      } else if (overlap < this->layer_param_.det_bg_threshold()) {
         // background window, force label and overlap to 0
         window[WindowDataLayer::LABEL] = 0;
         window[WindowDataLayer::OVERLAP] = 0;

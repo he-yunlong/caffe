@@ -93,14 +93,16 @@ message LayerParameter {
   optional uint32 rand_skip = 53 [ default = 0 ];
 
   // Fields related to detection (det_*)
-  // True Positive overlap threshold
-  optional float det_tp_threshold = 54 [ default = 0.5 ];
+  // foreground (object) overlap threshold
+  optional float det_fg_threshold = 54 [ default = 0.5 ];
+  // background (non-object) overlap threshold
+  optional float det_bg_threshold = 55 [ default = 0.3 ];
   // Fraction of batch that should be foreground objects
-  optional float det_fg_fraction = 55 [ default = 0.25 ];
+  optional float det_fg_fraction = 56 [ default = 0.25 ];
 
   // Set can_clobber to false to avoid overriding it with a pretrained
   // network's parameters when finetuning
-  optional bool can_clobber = 56 [ default = true ];
+  optional bool can_clobber = 57 [ default = true ];
 }
 
 message LayerConnection {
