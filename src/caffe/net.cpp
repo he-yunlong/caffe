@@ -261,6 +261,11 @@ void Net<Dtype>::CopyTrainedLayersFrom(const NetParameter& param) {
       DLOG(INFO) << "Ignoring source layer " << source_layer_name;
       continue;
     }
+    if (!layers_[target_layer_id]->layer_param().can_clobber()) {
+      LOG(INFO) << "Not loading layer " << source_layer_name
+          << " from source because can_clobber is false";
+      continue;
+    }
     DLOG(INFO) << "Copying source layer " << source_layer_name;
     vector<shared_ptr<Blob<Dtype> > >& target_blobs =
         layers_[target_layer_id]->blobs();
