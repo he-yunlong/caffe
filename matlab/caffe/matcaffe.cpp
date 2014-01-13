@@ -13,6 +13,7 @@ using namespace caffe;
 
 // The pointer to the internal caffe::Net instance
 static shared_ptr<Net<float> > net_;
+static int init_key = -2;
 
 // Five things to be aware of:
 //   caffe uses row-major order
@@ -196,6 +197,10 @@ static void set_device(MEX_ARGS) {
   Caffe::SetDevice(device_id); 
 }
 
+static void get_init_key(MEX_ARGS) {
+  plhs[0] = mxCreateDoubleScalar(init_key);
+}
+
 static void init(MEX_ARGS) {
   if (nrhs != 2) {
     LOG(ERROR) << "Only given " << nrhs << " arguments";
@@ -210,6 +215,11 @@ static void init(MEX_ARGS) {
 
   mxFree(param_file);
   mxFree(model_file);
+
+  init_key = rand();
+  if (nlhs == 1) {
+    plhs[0] = mxCreateDoubleScalar(init_key);
+  }
 }
 
 static void forward(MEX_ARGS) {
@@ -248,6 +258,7 @@ static handler_registry handlers[] = {
   { "set_phase_test",     set_phase_test  },
   { "set_device",         set_device      },
   { "get_weights",        get_weights     },
+  { "get_init_key",       get_init_key    },
   // The end.
   { "END",                NULL            },
 };
