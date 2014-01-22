@@ -3,6 +3,8 @@
 // This is a simple script that allows one to quickly finetune a network
 // for detection.
 //
+// Based on finetune_net.cpp by Yangqing Jia.
+//
 // Usage:
 //    finetune_detection_net solver_proto_file pretrained_net
 
@@ -24,7 +26,7 @@ int main(int argc, char** argv) {
   SolverParameter solver_param;
   ReadProtoFromTextFile(argv[1], &solver_param);
 
-  LOG(INFO) << "Starting Optimization";
+  LOG(INFO) << "Starting optimization";
   SGDSolver<float> solver(solver_param);
   LOG(INFO) << "Loading from " << argv[2];
 

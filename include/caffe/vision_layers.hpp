@@ -513,6 +513,7 @@ class WindowDataLayer : public Layer<Dtype> {
  public:
   explicit WindowDataLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
+  virtual ~WindowDataLayer();
   virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
