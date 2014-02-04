@@ -3,8 +3,8 @@ layers {
   layer {
     name: "data"
     type: "data"
-    source: "/data1/ILSVRC12/caffe-train-leveldb"
-    meanfile: "/data1/ILSVRC12/ilsvrc2012_mean.binaryproto"
+    source: "/home/jiayq/Data/ILSVRC12/train-leveldb"
+    meanfile: "/home/jiayq/Data/ILSVRC12/image_mean.binaryproto"
     batchsize: 256
     cropsize: 227
     mirror: true
